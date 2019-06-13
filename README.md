@@ -1,5 +1,5 @@
-# node-interface
-通过node+mongodb搭建的一套集登录、注册、个人信息、评论、点赞等接口
+# node-app
+通过node+mongodb+vue+element搭建的一套后台管理系统，包含基本的增删改查功能
 
 # 下载后端依赖包
 npm install 或者 cnpm install
