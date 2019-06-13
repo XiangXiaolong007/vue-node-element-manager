@@ -7,7 +7,7 @@
 <script>
 import jwt_decode from "jwt-decode";
 export default {
-  name: "login",
+  name: "app",
   data() {
     return {
       loginUser: {
@@ -73,5 +73,8 @@ html,body,#app {
   width: 100%;
 }
 #app {
+}
+.fillContainer .el-table td {
+  padding: 8px 0;
 }
 </style>

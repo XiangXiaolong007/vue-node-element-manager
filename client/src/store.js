@@ -20,7 +20,7 @@ const getters = {
 
 const mutations = {
   [types.SET_AUTHENTICATED](state, isAuthenticated) {
-    console.log(state);
+    // console.log(state);
     state.isAuthenticated = !!isAuthenticated;
   },
   [types.SET_USER](state, user) {
@@ -38,6 +38,10 @@ const actions = {
   },
   setUser: ({ commit }, user) => {
     commit(types.SET_USER, user);
+  },
+  clearCurrentState: ({ commit }) => {
+    commit(types.SET_AUTHENTICATED, false);
+    commit(types.SET_USER, null);
   }
 }
 

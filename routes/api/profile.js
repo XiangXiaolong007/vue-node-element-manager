@@ -22,6 +22,7 @@ router.get("/test", (req, res) => {
  */
 router.post("/add", passport.authenticate('jwt', {session: false}), (req, res) => {
     const profileFields = {};
+    // profileFields.user = req.user.id;
 
     if(req.body.type) profileFields.type = req.body.type;
     if(req.body.describe) profileFields.describe = req.body.describe;
@@ -30,6 +31,31 @@ router.post("/add", passport.authenticate('jwt', {session: false}), (req, res) =
     if(req.body.expend) profileFields.expend = req.body.expend;
     if(req.body.remark) profileFields.remark = req.body.remark;
 
+    // 与user关联
+    // Profile.findOne({user: req.user.id}).then(profile => {
+    //     if(!profile) {
+    //         // 没有的话新建
+    //         let record = {
+    //             user: req.user.id,
+    //             writeArr: [
+    //                 profileFields
+    //             ]
+    //         }
+    //         new Profile(record).save().then(profile => {
+    //             delete profile.user
+    //             res.json(profile);
+    //           });
+    //     } else {
+    //         if(!profile.writeArr) {
+    //             profile.writeArr = [];
+    //         }
+    //         profile.writeArr.unshift(profileFields)
+    //         profile.save().then(profile => {
+    //             delete profile.user
+    //             res.json(profile);
+    //         })
+    //     }
+    // })
     new Profile(profileFields).save().then(profile => {
         res.json(profile);
     })
@@ -40,16 +66,20 @@ router.post("/add", passport.authenticate('jwt', {session: false}), (req, res) =
  * @access Private
  */
 router.get("/", passport.authenticate('jwt', {session: false}), (req, res) => {
-    Profile.find().then(profile => {
-        if(!profile) {
-            return res.status(404).json({
-                errmsg: "没有任何信息"
-            });
-        }
-        res.json(profile);
-    }).catch(err => {
-        return res.status(400).json(err);
-    })
+    // 与user关联
+    // Profile.findOne({user: req.user.id})
+    //     .populate('user', ["name", "avatar", "identity"])
+    //     .then(profile => {
+        Profile.find().then(profile => {
+            if(!profile) {
+                return res.status(404).json({
+                    errmsg: "没有任何信息"
+                });
+            }
+            res.json(profile);
+        }).catch(err => {
+            return res.status(400).json(err);
+        })
 })
 
 /**
@@ -87,6 +117,22 @@ router.post("/edit/:id", passport.authenticate('jwt', {session: false}), (req, r
     if(req.body.expend) profileFields.expend = req.body.expend;
     if(req.body.remark) profileFields.remark = req.body.remark;
 
+    // 与user关联
+    // Profile.findOne({user: req.user.id})
+    //     .then(profile => {
+    //         // 找到要编辑的index
+    //         const removeIndex = profile.writeArr.map(item => item._id.toString()).indexOf(req.params.id);
+
+    //         profile.writeArr[removeIndex] = profileFields;
+            
+    //         // save
+    //         profile.save().then(profile => res.json(profile));
+    //     })
+    //     .catch(err => {
+    //         res.status(400).json({
+    //             editErr: "编辑失败"
+    //         })
+    //     })
     Profile.findOneAndUpdate({
         _id: req.params.id
     }, {
@@ -105,6 +151,22 @@ router.post("/edit/:id", passport.authenticate('jwt', {session: false}), (req, r
  * @access Private
  */
 router.delete("/delete/:id", passport.authenticate('jwt', {session: false}), (req, res) => {
+    // 与user关联
+    // Profile.findOne({user: req.user.id})
+    //     .then(profile => {
+    //         // 找到要删除的index
+    //         const removeIndex = profile.writeArr.map(item => item._id.toString()).indexOf(req.params.id);
+
+    //         profile.writeArr.splice(removeIndex,1);
+            
+    //         // save
+    //         profile.save().then(profile => res.json(profile));
+    //     })
+    //     .catch(err => {
+    //         res.status(400).json({
+    //             editErr: "删除失败"
+    //         })
+    //     })
     Profile.findOneAndRemove({
         _id: req.params.id
     }).then(profile => {

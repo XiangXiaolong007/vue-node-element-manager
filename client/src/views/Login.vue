@@ -106,7 +106,7 @@ export default {
             this.$message.error("登录失败");
           })
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
           return false;
         }
       });

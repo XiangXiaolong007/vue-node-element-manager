@@ -149,7 +149,7 @@ export default {
             this.$message.error("账号注册失败");
           })
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
           return false;
         }
       });
