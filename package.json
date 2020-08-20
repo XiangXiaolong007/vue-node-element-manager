@@ -20,7 +20,7 @@
     "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "bcrypt": "3.0.6",
+    "bcrypt": "5.0.0",
     "concurrently": "4.1.0",
     "gravatar": "1.8.0",
     "jsonwebtoken": "8.5.1",
